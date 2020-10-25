@@ -1,9 +1,13 @@
 *.egg-info
 *.pyc
+.coverage
+.DS_Store
 .mypy_cache
 .tox
 .venv
 .vscode
 build/
 dist/
+coverage/
 session.cookie
+htmlcov/
