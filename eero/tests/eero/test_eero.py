@@ -22,7 +22,7 @@ def test_id_from_url():
 
 @responses.activate
 def test_eero_login():
-    session = CookieStore("session")
+    session = CookieStore("temp")
     e = eero.Eero(session)
     r = {"data": {"user_token": "test token"}, "meta": {"code": 200}}
     responses.add(
@@ -33,10 +33,16 @@ def test_eero_login():
 
 @responses.activate
 def test_eero_login_verify():
-    session = CookieStore("session")
+    session = CookieStore("session_verify")
     e = eero.Eero(session)
     r = {"data": {"user_token": "test token"}, "meta": {"code": 200}}
     responses.add(
         responses.POST, "https://api-user.e2ro.com/2.2/login/verify", json=r
     )
+    r2 = {"data": {"user_token": "test token2"}, "meta": {"code": 200}}
+    responses.add(
+        responses.POST, "https://api-user.e2ro.com/2.2/login/refresh", json=r2
+    )
     e.login_verify("code", "token")
+    assert "s" in e._cookie_dict.keys()
+    e.login_refresh()
