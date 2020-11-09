@@ -8,10 +8,12 @@ import responses
 def test_client():
     c = Client()
     r = {"data": "some data", "meta": {"code": 200}}
-    responses.add(responses.GET,
-                  "https://api-user.e2ro.com/2.2/helloworld", json=r)
-    responses.add(responses.POST,
-                  "https://api-user.e2ro.com/2.2/helloworld", json=r)
+    responses.add(
+        responses.GET, "https://api-user.e2ro.com/2.2/helloworld", json=r
+    )
+    responses.add(
+        responses.POST, "https://api-user.e2ro.com/2.2/helloworld", json=r
+    )
     assert "some data" == c.get("helloworld")
     assert "some data" == c.post("helloworld")
 
@@ -21,6 +23,7 @@ def test_client():
 def test_client_error():
     c = Client()
     r = {"data": "unauthorized", "meta": {"code": 403}}
-    responses.add(responses.GET, "https://api-user.e2ro.com/2.2/helloworld",
-                  json=r)
+    responses.add(
+        responses.GET, "https://api-user.e2ro.com/2.2/helloworld", json=r
+    )
     c.get("helloworld")
