@@ -13,7 +13,7 @@ install:
 # command to run tests
 script:
   - flake8 eero
-  - py.test --cov=eero --cov-report=term
+  - pytest --cov=eero --cov-report=term
 
 after_success:
   - coveralls
