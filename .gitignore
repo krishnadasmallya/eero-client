@@ -13,3 +13,4 @@ coverage/
 dist/
 htmlcov/
 session.cookie
+cov.xml
