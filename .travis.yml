@@ -9,6 +9,7 @@ cache:
 # command to install dependencies
 install:
   - pip install -r requirements.txt
+  - pip install -e .
   - pip install coveralls flake8 responses requests-mock pytest-cov
 # command to run tests
 script:
