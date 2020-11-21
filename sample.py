@@ -115,12 +115,6 @@ def summary(recent):
 
 
 @cli.command()
-def log():
-    # TODO: FIGURE THIS OUT!
-    click.echo(eero.logs())
-
-
-@cli.command()
 def networks():
     """ Shows available networks. (Generally one) """
     for network in account()["networks"]["data"]:

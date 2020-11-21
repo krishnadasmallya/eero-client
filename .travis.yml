@@ -2,20 +2,12 @@ language: python
 python:
   - "3.7"
 
-cache:
-  directories:
-    - $HOME/.pip-cache/
-
 # command to install dependencies
 install:
   - pip install -r requirements.txt
   - pip install -e .
-  - pip install coveralls flake8 responses requests-mock pytest-cov
+  - pip install pytest pytest-cov pytest-mock coveralls responses coveralls
 # command to run tests
 script:
-  - flake8 eero
-  - pytest --cov=eero --cov-report=term 
-
-after_success:
+  - pytest --cov=eero eero/tests/* --cov-report=term
   - coveralls
-
