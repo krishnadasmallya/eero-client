@@ -6,7 +6,7 @@ python:
 install:
   - pip install -r requirements.txt
   - pip install -e .
-  - pip install pytest pytest-cov pyest-mock coveralls responses coveralls
+  - pip install pytest pytest-cov pytest-mock coveralls responses coveralls
 # command to run tests
 script:
   - pytest --cov=eero eero/tests/* --cov-report=term
