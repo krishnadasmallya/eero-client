@@ -1,7 +1,7 @@
 # Eero Client - Starter client for Eero API Interactions
 
-![badge](https://img.shields.io/github/workflow/status/bruskiza/eero-client/Python%20package)
-[![Coverage Status](https://coveralls.io/repos/github/bruskiza/eero-client/badge.svg?branch=develop)](https://coveralls.io/github/bruskiza/eero-client?branch=develop)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/krishnadasmallya/eero-client/Python)
+[![Coverage Status](https://coveralls.io/repos/github/krishnadasmallya/eero-client/badge.svg)](https://coveralls.io/github/krishnadasmallya/eero-client)
 
 Having seen 343max/eero-client's excellent starter project, I went ahead and forked it.
 
