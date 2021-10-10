@@ -19,7 +19,7 @@ README_FILE = next(
 
 setup(name='eero',
       version=verstr,
-      description="Manage eero network devices",
+      description="Extract eero network details and insights",
       long_description=open(README_FILE, "r").read(),
       classifiers=[
           "Development Status :: 4 - Beta",
@@ -32,9 +32,9 @@ setup(name='eero',
           "License :: OSI Approved :: MIT License",
       ],
       keywords='eero',
-      author='Bruce McIntyre',
-      author_email='bruce.mcintyre@gmail.com',
-      url='https://github.com/bruskiza/eero-client',
+      author='Krishnadas Mallya',
+      author_email='krishnadasmallya@gmail.com',
+      url='https://github.com/krishnadasmallya/eero-client',
       license='MIT License',
       packages=find_packages(exclude=[
           'ez_setup', 'example', 'tests', 'external']),

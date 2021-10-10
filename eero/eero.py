@@ -1,7 +1,7 @@
 from .client import Client
 from .exception import ClientException
 import re
-
+from datetime import datetime, timedelta
 
 class Eero(object):
     def __init__(self, session):
@@ -99,6 +99,58 @@ class Eero(object):
         return self.refreshed(
             lambda: self.client.post(
                 "eeros/{}/reboot".format(self.id_from_url(device_id)),
+                cookies=self._cookie_dict,
+            )
+        )
+
+    def data_usage_hour(self, network_id, start, end):
+        return self.refreshed(
+            lambda: self.client.get(
+                "networks/{}/data_usage?start={}&end={}&cadence=hourly".format(network_id, start, end),
+                cookies=self._cookie_dict,
+            )
+        )
+
+    def data_usage_last_hour(self, network_id):
+        current_time = datetime.utcnow() - timedelta(hours=1)
+        end = self.ceil_dt_min(current_time, timedelta(hours=1))
+        start = end - timedelta(hours=1)
+        return self.data_usage_hour(network_id, start.isoformat(timespec='milliseconds'), end.isoformat(timespec='milliseconds'))
+
+    def data_usage_5_min_breakdown(self, network_id, start, end):
+        return self.refreshed(
+            lambda: self.client.get(
+                "networks/{}/data_usage/breakdown?start={}&end={}".format(network_id, start, end),
+                cookies=self._cookie_dict,
+            )
+        )
+
+    def data_usage_last_5_min_breakdown(self, network_id):
+        # FIXME: consider latency in the data. Look from 10 mins back
+        latency_adjustment=5
+        current_time = datetime.utcnow() - timedelta(minutes=latency_adjustment+10)
+        end = self.ceil_dt_min(current_time, timedelta(minutes=latency_adjustment))
+        start = end - timedelta(minutes=latency_adjustment)
+        return self.data_usage_5_min_breakdown(network_id, start.isoformat(timespec='milliseconds'), end.isoformat(timespec='milliseconds'))
+
+    def ceil_dt_min(self, dt, delta):
+        return dt + (datetime.min - dt) % delta
+
+    def ceil_dt_hour(self, dt, delta):
+        return dt + (datetime.hour - dt) % delta
+
+    def start_speed_test(self, network_id):
+        return self.refreshed(
+            lambda: self.client.post(
+                "networks/{}/speedtest".format(network_id),
+                cookies=self._cookie_dict,
+            )
+        )
+
+    def get_speed_test(self, network_id):
+        return self.refreshed(
+            lambda: self.client.get(
+                "networks/{}/speedtest".format(network_id),
                 cookies=self._cookie_dict,
             )
         )
