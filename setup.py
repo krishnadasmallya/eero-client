@@ -13,14 +13,15 @@ else:
 
 README_FILE = next(
     r
-    for r in ['./README.md', './README.txt', './README']
+    for r in ['./README.txt', './README']
     if os.path.isfile(r)
 )
 
-setup(name='eero',
+setup(name='eero-km',
       version=verstr,
       description="Extract eero network details and insights",
       long_description=open(README_FILE, "r").read(),
+      long_description_content_type="text/plain",
       classifiers=[
           "Development Status :: 4 - Beta",
           "Intended Audience :: Developers",
@@ -31,7 +32,7 @@ setup(name='eero',
           "Topic :: Utilities",
           "License :: OSI Approved :: MIT License",
       ],
-      keywords='eero',
+      keywords='eero-km',
       author='Krishnadas Mallya',
       author_email='krishnadasmallya@gmail.com',
       url='https://github.com/krishnadasmallya/eero-client',
@@ -41,6 +42,9 @@ setup(name='eero',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-          'requests'
+          'requests',
+          'click',
+          'pandas',
+          'PyYAML'
       ]
       )
