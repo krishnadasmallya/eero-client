@@ -1,5 +1,6 @@
 import eero
 from eero.cookie_store import CookieStore
+import pytest
 import responses
 
 
@@ -25,9 +26,7 @@ def test_eero_login():
     session = CookieStore("temp")
     e = eero.Eero(session)
     r = {"data": {"user_token": "test token"}, "meta": {"code": 200}}
-    responses.add(
-        responses.POST, "https://api-user.e2ro.com/2.2/login", json=r
-    )
+    responses.add(responses.POST, "https://api-user.e2ro.com/2.2/login", json=r)
     assert "test token" == e.login("blah")
 
 
@@ -36,9 +35,7 @@ def test_eero_login_verify():
     session = CookieStore("session_verify")
     e = eero.Eero(session)
     r = {"data": {"user_token": "test token"}, "meta": {"code": 200}}
-    responses.add(
-        responses.POST, "https://api-user.e2ro.com/2.2/login/verify", json=r
-    )
+    responses.add(responses.POST, "https://api-user.e2ro.com/2.2/login/verify", json=r)
     r2 = {"data": {"user_token": "test token2"}, "meta": {"code": 200}}
     responses.add(
         responses.POST, "https://api-user.e2ro.com/2.2/login/refresh", json=r2
@@ -46,3 +43,13 @@ def test_eero_login_verify():
     e.login_verify("code", "token")
     assert "s" in e._cookie_dict.keys()
     e.login_refresh()
+    
+def test_eero_refresh(mocker):
+    stub = mocker.stub(name='on_something_stub')
+    
+    session = CookieStore("session_verify")
+    e = eero.Eero(session)
+    
+    e.refreshed(stub)
+    
+    
